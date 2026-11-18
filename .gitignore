@@ -14,6 +14,9 @@ kode/results/**/checkpoints/*
 !kode/results/task2/checkpoints/cnn_W50_seed[0-2].pt
 *.ckpt
 
+# Old long report draft, kept only as a local backup
+catatan/task2_rul_versi_panjang.tex
+
 # Python
 __pycache__/
 *.pyc

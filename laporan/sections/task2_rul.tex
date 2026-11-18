@@ -78,7 +78,7 @@ first passes a sanity check by memorising a single batch of 64 windows (RMSE bel
 Python 3.11, PyTorch 2.11.0, NumPy 2.4.6, pandas 3.1.1 and scikit-learn 1.9.1.
 
 \paragraph{Architectures.} The non-deep baselines are ridge regression and gradient-boosted trees on
-42 window features (recent level, mean and slope per sensor). The 1D-CNN~\cite{babu2016,li2018} slides
+42 features of the same $W=50$ window (recent level, mean and slope per sensor). The 1D-CNN~\cite{babu2016,li2018} slides
 three convolution layers (32, 64, 64 filters of width 5) along the window. It overfitted within a few
 epochs, so we tested a pooled head, stronger regularisation and a longer window, one at a time;
 $W=50$ helped most and was chosen on the early-stopping machines (Table~\ref{tab:t2-cnn}). The
@@ -97,8 +97,8 @@ state to a small dense head; $W=50$ was again better than $W=30$.
     & & \multicolumn{2}{c}{Held-out} & \multicolumn{2}{c}{Five-fold} \\
     Model & Params & RMSE & Score & RMSE & Score \\
     \midrule
-    Ridge                 & --   & 23.31            & 37         & $21.99 \pm 0.87$ & $27 \pm 9$ \\
-    Boosted trees         & --   & 21.87            & 62         & $20.51 \pm 0.93$ & $34 \pm 17$ \\
+    Ridge                 & --   & 22.80            & 42         & $21.48 \pm 0.94$ & $28 \pm 11$ \\
+    Boosted trees         & --   & 21.51            & 57         & $20.29 \pm 0.88$ & $33 \pm 16$ \\
     1D-CNN ($W=50$)       & 238k & $21.45 \pm 0.63$ & $32 \pm 8$ & $21.12 \pm 1.02$ & $27 \pm 10$ \\
     GRU ($W=50$)          & 45k  & $\mathbf{20.70 \pm 0.10}$ & $34 \pm 6$ & $\mathbf{19.20 \pm 0.83}$ & $\mathbf{20 \pm 9}$ \\
     \bottomrule
@@ -131,8 +131,8 @@ up to failure and therefore serves only for this analysis, never as a model inpu
 All splits are by machine, because rows of one machine are near-duplicates and a row split would let
 a model recognise machines. Table~\ref{tab:t2-ranges} splits the held-out cuts by true RUL. Close to
 failure, where maintenance decisions are made, the GRU is the most accurate model (RMSE 8.5 at 0--25
-cycles). All models are worst at 51--100 cycles and predict too much life there (mean error $+13$ to
-$+22$), which matches the late wear onsets above. The ranges 26--100 cause 89--95\% of the total
+cycles). All models are worst at 51--100 cycles and predict too much life there (mean error $+12.6$ to
+$+20.5$), which matches the late wear onsets above. The ranges 26--100 cause 91--95\% of the total
 asymmetric score.
 
 \begin{table}[t]
@@ -146,8 +146,8 @@ asymmetric score.
     True RUL & 0--25 & 26--50 & 51--100 & 101--149 & 150 \\
     Cuts     & 122   & 116    & 227     & 172      & 263 \\
     \midrule
-    Ridge         & 15.1 (4.4) & 23.4 (109) & 32.1 (75)  & 23.4 (13.3) & 16.3 (3.5) \\
-    Boosted trees & 10.1 (1.8) & 19.2 (241) & 32.5 (110) & 22.7 (11.9) & 13.5 (2.6) \\
+    Ridge         & 15.0 (4.0) & 21.9 (142) & 31.6 (77)  & 22.5 (12.2) & 16.4 (3.5) \\
+    Boosted trees & 10.8 (2.1) & 19.8 (220) & 31.8 (102) & 20.7 (9.7)  & 14.1 (2.6) \\
     1D-CNN        & 9.5 (1.6)  & 18.1 (115) & 29.7 (56)  & 20.2 (8.4)  & 18.7 (4.1) \\
     GRU           & 8.5 (1.2)  & 17.8 (126) & 29.6 (60)  & 20.7 (9.1)  & 15.9 (2.9) \\
     \bottomrule
@@ -221,3 +221,9 @@ cycles has the largest net benefit: the summed score falls by 22\% and the RMSE 
 ensemble mean at each test machine's last cycle, minus 3, clipped to $[0,150]$. Without retraining,
 \texttt{python -m task2\_rul.demo} recomputes the held-out results from the saved models and confirms
 that the final weights reproduce \texttt{prediksi\_rul.csv} exactly.
+
+\paragraph{Known limitations.} Validation cuts are drawn with replacement, so 11 of the 900 held-out cuts
+repeat another cut. The 72 early-stopping machines are reused for interval calibration and belong to the
+pool of the shift simulation, and their ten cuts per machine are correlated, so both results may be
+slightly optimistic. The spike filter needs three earlier readings, so the first three cycles of a history
+are not checked for spikes.
