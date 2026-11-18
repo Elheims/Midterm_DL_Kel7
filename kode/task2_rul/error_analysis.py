@@ -21,7 +21,6 @@ from __future__ import annotations
 import json
 
 import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
 import torch
 from sklearn.cluster import KMeans

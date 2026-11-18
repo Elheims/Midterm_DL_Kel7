@@ -35,7 +35,7 @@ from task2_rul.evaluate import cut_windows, load_split, metrics
 from task2_rul.labels import RUL_CAP
 from task2_rul.windows import Windows, make_windows
 
-W = 30
+W = 50  # same window length as the chosen deep models, so the comparison is fair
 N_LAST = 5
 
 
