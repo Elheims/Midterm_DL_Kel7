@@ -1,0 +1,115 @@
+{
+  "W": 30,
+  "features": [
+    "last5_s02",
+    "last5_s03",
+    "last5_s04",
+    "last5_s07",
+    "last5_s08",
+    "last5_s09",
+    "last5_s11",
+    "last5_s12",
+    "last5_s13",
+    "last5_s14",
+    "last5_s15",
+    "last5_s17",
+    "last5_s20",
+    "last5_s21",
+    "mean_s02",
+    "mean_s03",
+    "mean_s04",
+    "mean_s07",
+    "mean_s08",
+    "mean_s09",
+    "mean_s11",
+    "mean_s12",
+    "mean_s13",
+    "mean_s14",
+    "mean_s15",
+    "mean_s17",
+    "mean_s20",
+    "mean_s21",
+    "slope_s02",
+    "slope_s03",
+    "slope_s04",
+    "slope_s07",
+    "slope_s08",
+    "slope_s09",
+    "slope_s11",
+    "slope_s12",
+    "slope_s13",
+    "slope_s14",
+    "slope_s15",
+    "slope_s17",
+    "slope_s20",
+    "slope_s21"
+  ],
+  "models": {
+    "ridge": {
+      "val_cuts": {
+        "rmse": 23.312,
+        "score_sum": 33451.4,
+        "score_mean": 37.168,
+        "score_median": 1.938,
+        "score_share_worst5pct": 0.779,
+        "share_late_over_20": 0.24,
+        "bias": 4.565,
+        "n": 900
+      },
+      "val_all_windows": {
+        "rmse": 20.713,
+        "score_sum": 910122.1,
+        "score_mean": 20.014,
+        "score_median": 1.772,
+        "score_share_worst5pct": 0.776,
+        "share_late_over_20": 0.157,
+        "bias": -0.749,
+        "n": 45475
+      },
+      "train_windows": {
+        "rmse": 20.064,
+        "score_sum": 3047451.2,
+        "score_mean": 16.689,
+        "score_median": 1.8,
+        "score_share_worst5pct": 0.746,
+        "share_late_over_20": 0.17,
+        "bias": 0.135,
+        "n": 182599
+      },
+      "fit_seconds": 0.2
+    },
+    "boosted_trees": {
+      "val_cuts": {
+        "rmse": 21.874,
+        "score_sum": 55804.9,
+        "score_mean": 62.005,
+        "score_median": 1.209,
+        "score_share_worst5pct": 0.895,
+        "share_late_over_20": 0.166,
+        "bias": 3.156,
+        "n": 900
+      },
+      "val_all_windows": {
+        "rmse": 19.249,
+        "score_sum": 1113196.6,
+        "score_mean": 24.479,
+        "score_median": 1.148,
+        "score_share_worst5pct": 0.862,
+        "share_late_over_20": 0.12,
+        "bias": -0.857,
+        "n": 45475
+      },
+      "train_windows": {
+        "rmse": 14.106,
+        "score_sum": 934374.6,
+        "score_mean": 5.117,
+        "score_median": 0.844,
+        "score_share_worst5pct": 0.667,
+        "share_late_over_20": 0.093,
+        "bias": -0.025,
+        "n": 182599
+      },
+      "fit_seconds": 2.8
+    }
+  }
+}
