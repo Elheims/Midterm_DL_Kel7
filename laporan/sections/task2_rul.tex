@@ -1,0 +1,223 @@
+\section{Task 2: Remaining Useful Life Regression}
+% Numbers: kode/results/task2/*.json (python run_all.py --task 2). Supporting material: Appendix.
+
+We predict the remaining useful life (RUL) of 300 press machines at their last recorded cycle,
+from 900 run-to-failure histories. Each cycle has three operating settings and 21 sensors; the data
+structure and the asymmetric score follow the C-MAPSS benchmark~\cite{saxena2008damage}. The best
+architecture, a GRU, reaches an RMSE of $19.2 \pm 0.8$ cycles in five-fold cross-validation by
+machine, and the submitted predictions average five GRUs. Supporting figures and tables are in
+Appendix~\ref{app:t2}.
+
+\subsection{Exploration and preprocessing}
+\label{sec:t2-prep}
+
+\paragraph{Operating settings and normalisation.} The settings take six discrete combinations
+(Fig.~\ref{fig:t2-regimes}a), which KMeans ($k=6$) separates perfectly. The regime changes in 83\%
+of consecutive cycles and explains 37--100\% of each sensor's variance, so raw readings jump between
+levels and hide the slow wear trend (Fig.~\ref{fig:t2-regimes}b). We therefore z-score each sensor
+within its regime, using statistics from training machines only. Noise levels are almost equal
+across regimes (max/min standard deviation $\le 1.024$), so this removes the offset without
+distorting the signal: the trend becomes visible (Fig.~\ref{fig:t2-regimes}c) and the rank
+correlation of s04 with RUL rises from 0.28 to 0.71 in absolute value.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{t2_regimes}
+  \caption{(a) The operating settings form six regimes. (b) Raw s04 of one machine, coloured by
+  regime. (c) The same sensor after per-regime normalisation shows the wear trend.}
+  \label{fig:t2-regimes}
+\end{figure}
+
+\paragraph{Sensors, gaps and spikes.} Seven sensors (s01, s05, s06, s10, s16, s18, s19) show no
+wear trend: their mean absolute change between a machine's first and last 20 cycles is 0.23--0.25
+$z$, against 1.22--2.66 $z$ for the other 14, so we drop them (Fig.~\ref{fig:t2-sensors}). Each
+sensor misses about 2\% of its readings, independently of the other sensors, the regime and the
+distance to failure. Because 35\% of rows miss at least one sensor, we keep all rows and fill a gap
+with the machine's previous reading; a gap with no earlier reading gets the healthy start level.
+About 0.2\% of readings are isolated spikes of both signs. A reading further than 5 robust noise
+standard deviations from the median of the previous 10 cycles is treated as a gap
+(Fig.~\ref{fig:t2-spikes}). All steps use only past cycles: preprocessing a history cut at any cycle
+gives exactly the same values as preprocessing the full history.
+
+\paragraph{Failure modes.} Machines fail in two modes (342 and 558 machines) in which different
+sensors degrade, and s11 even drifts in opposite directions (Fig.~\ref{fig:t2-modes}). A model must
+therefore combine several sensors rather than follow one trend per sensor.
+
+\subsection{RUL labels}
+\label{sec:t2-labels}
+
+Training machines run until they fail, so the last cycle $T$ of each machine is its failure cycle.
+Following the piecewise-linear target of Heimes~\cite{heimes2008} and the exam's definition,
+\[
+  \mathrm{RUL}(t) = \min\left(150,\; T - t\right).
+\]
+The cap reflects what the sensors can show: early in life they are flat, so a machine with 300
+cycles left looks like one with 200 left (Fig.~\ref{fig:t2-labels}). As a result, 47\% of the
+training rows carry the label 150.
+
+\subsection{Sequence construction}
+\label{sec:t2-windows}
+
+Each sample is a sliding window~\cite{babu2016,zheng2017,li2018}: the last $W$ cycles of one machine
+ending at cycle $t$, with target $\mathrm{RUL}(t)$ (Fig.~\ref{fig:t2-windows}). Every sample thus has
+the shape $W \times 14$ whatever the history length, and the input is exactly what is known at
+prediction time. Histories shorter than $W$ are padded at the front with their first reading; since
+the shortest test history has 50 cycles, no test machine needs padding for $W \le 50$. To exclude
+future leakage, the code checks 2{,}000 random windows per setting (one machine, consecutive cycles,
+none later than $t$, correct target) and confirms that a deliberately leaky version is rejected.
+
+\subsection{Models}
+\label{sec:t2-models}
+
+\paragraph{Protocol.} All models are compared on the same 180 held-out machines. Each is cut at five
+random cycles between cycle 50 and its failure, which reproduces the test histories well (median
+length 160 vs.\ 162 cycles). The other 720 machines fit the preprocessing and the models; 72 of them
+are held aside for early stopping. Deep models minimise the squared error of $\mathrm{RUL}/150$ with
+Adam and dropout, and are trained with three seeds (0--2; 0--4 for the final ensemble). Every network
+first passes a sanity check by memorising a single batch of 64 windows (RMSE below 0.1 cycles). We use
+Python 3.11, PyTorch 2.11.0, NumPy 2.4.6, pandas 3.1.1 and scikit-learn 1.9.1.
+
+\paragraph{Architectures.} The non-deep baselines are ridge regression and gradient-boosted trees on
+42 window features (recent level, mean and slope per sensor). The 1D-CNN~\cite{babu2016,li2018} slides
+three convolution layers (32, 64, 64 filters of width 5) along the window. It overfitted within a few
+epochs, so we tested a pooled head, stronger regularisation and a longer window, one at a time;
+$W=50$ helped most and was chosen on the early-stopping machines (Table~\ref{tab:t2-cnn}). The
+GRU~\cite{cho2014} reads the window cycle by cycle with two layers of 64 units and passes its last
+state to a small dense head; $W=50$ was again better than $W=30$.
+
+\begin{table}[t]
+  \centering
+  \caption{Model comparison. Held-out: 180 machines, 900 test-like cuts (deep models: mean $\pm$ std
+  over three seeds). Five-fold: mean $\pm$ std over folds, all steps refitted per fold (deep models:
+  one seed, no ensemble or shift). Score: asymmetric score per prediction.}
+  \label{tab:t2-models}
+  \small
+  \begin{tabular}{lrrrrr}
+    \toprule
+    & & \multicolumn{2}{c}{Held-out} & \multicolumn{2}{c}{Five-fold} \\
+    Model & Params & RMSE & Score & RMSE & Score \\
+    \midrule
+    Ridge                 & --   & 23.31            & 37         & $21.99 \pm 0.87$ & $27 \pm 9$ \\
+    Boosted trees         & --   & 21.87            & 62         & $20.51 \pm 0.93$ & $34 \pm 17$ \\
+    1D-CNN ($W=50$)       & 238k & $21.45 \pm 0.63$ & $32 \pm 8$ & $21.12 \pm 1.02$ & $27 \pm 10$ \\
+    GRU ($W=50$)          & 45k  & $\mathbf{20.70 \pm 0.10}$ & $34 \pm 6$ & $\mathbf{19.20 \pm 0.83}$ & $\mathbf{20 \pm 9}$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\paragraph{Why some predictions are far off.} The largest errors of the CNN occur at true RUL 40--120,
+for example a machine predicted at 139 cycles with 45 left, and one predicted at 8 with 83 left. We
+define a machine's \emph{wear onset} as the number of cycles before failure at which its wear level
+(mean absolute deviation of the sensors from their healthy level) first exceeds 0.25. The onset varies
+widely (interquartile range 59--102 cycles), and the error falls steadily with it
+(Fig.~\ref{fig:t2-error}): machines that start wearing late are predicted too high, machines that
+start early too low. The correlation is between $-0.46$ and $-0.81$ for three seeds and three onset
+thresholds. The sensors show how worn a machine is \emph{now}, not how fast it will keep wearing, so
+part of this error cannot be removed by any window-based model. The wear onset uses the full history
+up to failure and therefore serves only for this analysis, never as a model input.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{t2_error_analysis}
+  \caption{(a) Wear level of the CNN's worst late and worst early prediction and of a machine with
+  median onset; dots mark the prediction points. (b) Prediction error against wear onset for held-out
+  cuts with true RUL 40--120 (seed 0).}
+  \label{fig:t2-error}
+\end{figure}
+
+\subsection{Validation}
+\label{sec:t2-validation}
+
+All splits are by machine, because rows of one machine are near-duplicates and a row split would let
+a model recognise machines. Table~\ref{tab:t2-ranges} splits the held-out cuts by true RUL. Close to
+failure, where maintenance decisions are made, the GRU is the most accurate model (RMSE 8.5 at 0--25
+cycles). All models are worst at 51--100 cycles and predict too much life there (mean error $+13$ to
+$+22$), which matches the late wear onsets above. The ranges 26--100 cause 89--95\% of the total
+asymmetric score.
+
+\begin{table}[t]
+  \centering
+  \caption{RMSE (asymmetric score per prediction in brackets) per range of true RUL on the 180 held-out
+  machines; deep models: mean of three seeds, $W=50$.}
+  \label{tab:t2-ranges}
+  \small
+  \begin{tabular}{lrrrrr}
+    \toprule
+    True RUL & 0--25 & 26--50 & 51--100 & 101--149 & 150 \\
+    Cuts     & 122   & 116    & 227     & 172      & 263 \\
+    \midrule
+    Ridge         & 15.1 (4.4) & 23.4 (109) & 32.1 (75)  & 23.4 (13.3) & 16.3 (3.5) \\
+    Boosted trees & 10.1 (1.8) & 19.2 (241) & 32.5 (110) & 22.7 (11.9) & 13.5 (2.6) \\
+    1D-CNN        & 9.5 (1.6)  & 18.1 (115) & 29.7 (56)  & 20.2 (8.4)  & 18.7 (4.1) \\
+    GRU           & 8.5 (1.2)  & 17.8 (126) & 29.6 (60)  & 20.7 (9.1)  & 15.9 (2.9) \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+To check that the ranking is not luck of one split, we ran a five-fold cross-validation by machine,
+refitting preprocessing, sensor selection and models in every fold. The GRU has the lowest RMSE in all
+five folds (Fig.~\ref{fig:t2-validation}b, Table~\ref{tab:t2-models}). The CNN, in contrast, is not
+better than the boosted trees across folds, so its small lead on the first split was partly luck.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{t2_validation}
+  \caption{(a) RMSE per range of true RUL on the 180 held-out machines. (b) RMSE of each model in each
+  fold of the five-fold cross-validation.}
+  \label{fig:t2-validation}
+\end{figure}
+
+\subsection{Uncertainty and maintenance decisions}
+\label{sec:t2-uncertainty}
+
+\paragraph{Prediction intervals.} We sample predictions from five GRUs with dropout kept on at
+prediction time, combining a deep ensemble~\cite{lakshminarayanan2017} with MC
+dropout~\cite{gal2016} (five networks $\times$ 20 passes). Raw 90\% intervals contain the true RUL in
+only 63\% of the held-out cuts, because the samples measure how unsure the \emph{model} is, not how
+unpredictable the \emph{machine} is. We calibrate them with split-conformal prediction on the 72
+held-aside machines, which widens the intervals by a common factor. They then cover 90\% of the
+held-out cuts with a mean width of 50 cycles (Table~\ref{tab:t2-unc}). They are narrow close to failure
+(width 31, coverage 95\%) and wide in mid-life (Fig.~\ref{fig:t2-unc}). At 51--100 cycles coverage
+reaches only 74\%, because even the uncertainty estimate cannot foresee a late wear onset.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{t2_uncertainty}
+  \caption{(a) Coverage of the 90\% interval per range of true RUL. (b) Prediction, calibrated interval
+  and true RUL over the life of three held-out machines.}
+  \label{fig:t2-unc}
+\end{figure}
+
+\paragraph{When to service a machine.} We replay the 180 held-out machines cycle by cycle from cycle 50
+and service a machine as soon as a rule fires. Assuming that maintenance needs 10 cycles to arrange, a
+machine is \emph{too late} if fewer than 10 cycles remain at that moment; the cycles that remain are
+unused life. To catch every machine in time, a rule on the predicted RUL needs a threshold of 34 and
+wastes 36.4 cycles on average; a rule on the lower end of the interval needs a threshold of 14 and
+wastes 38.1 (Fig.~\ref{fig:t2-maint}). The interval therefore does not improve this decision: near the
+threshold it is about 40 cycles wide for almost every machine, and its width hardly tracks the actual
+error (correlation 0.12). We recommend servicing a machine when its predicted RUL falls to about 35
+cycles. Because this threshold was selected on the same 180 machines, the result of no late machine is
+optimistic.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{t2_maintenance}
+  \caption{Replay of the 180 held-out machines. (a) Share of machines serviced too late against mean
+  unused life for thresholds from 0 to 80; large dots: cheapest setting with no machine too late.
+  (b) True cycles left when service is triggered at those settings.}
+  \label{fig:t2-maint}
+\end{figure}
+
+\subsection{Final model and test predictions}
+\label{sec:t2-final}
+
+The final model averages five GRUs ($W=50$) retrained with the same recipe on all 900 machines (810 for
+training, 90 for early stopping). Since late predictions cost more, we lower every prediction by a fixed
+shift. Optimising the score alone would suggest 13 cycles, but this raises the held-out RMSE from 20.5 to
+24.1. We therefore simulated 2{,}000 test sets of 300 validation machines and measured each metric's
+change relative to its natural spread between test sets, weighting both metrics equally. A shift of 3
+cycles has the largest net benefit: the summed score falls by 22\% and the RMSE rises by only 0.10
+(Table~\ref{tab:t2-shift}). The real test set was not used for any choice. The submitted RUL is the
+ensemble mean at each test machine's last cycle, minus 3, clipped to $[0,150]$. Without retraining,
+\texttt{python -m task2\_rul.demo} recomputes the held-out results from the saved models and confirms
+that the final weights reproduce \texttt{prediksi\_rul.csv} exactly.
