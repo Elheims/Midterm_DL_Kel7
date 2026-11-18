@@ -3,23 +3,23 @@
   "folds": {
     "0": {
       "ridge": {
-        "rmse": 23.312,
-        "score_sum": 33451.4,
-        "score_mean": 37.168,
-        "score_median": 1.938,
-        "score_share_worst5pct": 0.779,
-        "share_late_over_20": 0.24,
-        "bias": 4.565,
+        "rmse": 22.795,
+        "score_sum": 37510.3,
+        "score_mean": 41.678,
+        "score_median": 1.779,
+        "score_share_worst5pct": 0.815,
+        "share_late_over_20": 0.223,
+        "bias": 3.923,
         "n": 900
       },
       "boosted_trees": {
-        "rmse": 21.874,
-        "score_sum": 55804.9,
-        "score_mean": 62.005,
-        "score_median": 1.209,
-        "score_share_worst5pct": 0.895,
-        "share_late_over_20": 0.166,
-        "bias": 3.156,
+        "rmse": 21.506,
+        "score_sum": 51292.8,
+        "score_mean": 56.992,
+        "score_median": 1.255,
+        "score_share_worst5pct": 0.897,
+        "share_late_over_20": 0.173,
+        "bias": 2.983,
         "n": 900
       },
       "cnn": {
@@ -62,23 +62,23 @@
     },
     "1": {
       "ridge": {
-        "rmse": 22.427,
-        "score_sum": 29953.9,
-        "score_mean": 33.282,
-        "score_median": 2.123,
-        "score_share_worst5pct": 0.798,
-        "share_late_over_20": 0.247,
-        "bias": 5.695,
+        "rmse": 22.099,
+        "score_sum": 32555.5,
+        "score_mean": 36.173,
+        "score_median": 1.911,
+        "score_share_worst5pct": 0.833,
+        "share_late_over_20": 0.236,
+        "bias": 5.091,
         "n": 900
       },
       "boosted_trees": {
-        "rmse": 21.049,
-        "score_sum": 31724.6,
-        "score_mean": 35.25,
-        "score_median": 1.335,
-        "score_share_worst5pct": 0.848,
-        "share_late_over_20": 0.186,
-        "bias": 4.161,
+        "rmse": 20.833,
+        "score_sum": 30937.2,
+        "score_mean": 34.375,
+        "score_median": 1.467,
+        "score_share_worst5pct": 0.864,
+        "share_late_over_20": 0.18,
+        "bias": 3.312,
         "n": 900
       },
       "cnn": {
@@ -121,23 +121,23 @@
     },
     "2": {
       "ridge": {
-        "rmse": 21.256,
-        "score_sum": 18490.4,
-        "score_mean": 20.545,
-        "score_median": 2.314,
-        "score_share_worst5pct": 0.735,
-        "share_late_over_20": 0.223,
-        "bias": 4.222,
+        "rmse": 20.534,
+        "score_sum": 18576.2,
+        "score_mean": 20.64,
+        "score_median": 2.058,
+        "score_share_worst5pct": 0.772,
+        "share_late_over_20": 0.203,
+        "bias": 3.463,
         "n": 900
       },
       "boosted_trees": {
-        "rmse": 19.649,
-        "score_sum": 20582.6,
-        "score_mean": 22.87,
-        "score_median": 1.536,
-        "score_share_worst5pct": 0.83,
-        "share_late_over_20": 0.169,
-        "bias": 2.931,
+        "rmse": 19.269,
+        "score_sum": 19530.6,
+        "score_mean": 21.701,
+        "score_median": 1.541,
+        "score_share_worst5pct": 0.838,
+        "share_late_over_20": 0.157,
+        "bias": 2.442,
         "n": 900
       },
       "cnn": {
@@ -180,23 +180,23 @@
     },
     "3": {
       "ridge": {
-        "rmse": 21.546,
-        "score_sum": 24472.8,
-        "score_mean": 27.192,
-        "score_median": 2.474,
-        "score_share_worst5pct": 0.787,
-        "share_late_over_20": 0.243,
-        "bias": 5.609,
+        "rmse": 21.063,
+        "score_sum": 22669.1,
+        "score_mean": 25.188,
+        "score_median": 2.093,
+        "score_share_worst5pct": 0.788,
+        "share_late_over_20": 0.222,
+        "bias": 4.915,
         "n": 900
       },
       "boosted_trees": {
-        "rmse": 19.92,
-        "score_sum": 29982.7,
-        "score_mean": 33.314,
-        "score_median": 1.335,
-        "score_share_worst5pct": 0.87,
-        "share_late_over_20": 0.181,
-        "bias": 4.018,
+        "rmse": 19.784,
+        "score_sum": 32850.7,
+        "score_mean": 36.501,
+        "score_median": 1.28,
+        "score_share_worst5pct": 0.892,
+        "share_late_over_20": 0.179,
+        "bias": 3.537,
         "n": 900
       },
       "cnn": {
@@ -239,23 +239,23 @@
     },
     "4": {
       "ridge": {
-        "rmse": 21.412,
-        "score_sum": 14806.2,
-        "score_mean": 16.451,
-        "score_median": 2.063,
-        "score_share_worst5pct": 0.619,
-        "share_late_over_20": 0.256,
-        "bias": 5.47,
+        "rmse": 20.901,
+        "score_sum": 13837.4,
+        "score_mean": 15.375,
+        "score_median": 1.975,
+        "score_share_worst5pct": 0.624,
+        "share_late_over_20": 0.237,
+        "bias": 4.659,
         "n": 900
       },
       "boosted_trees": {
-        "rmse": 20.061,
-        "score_sum": 14909.1,
-        "score_mean": 16.566,
-        "score_median": 1.547,
+        "rmse": 20.075,
+        "score_sum": 15490.1,
+        "score_mean": 17.211,
+        "score_median": 1.53,
         "score_share_worst5pct": 0.711,
-        "share_late_over_20": 0.208,
-        "bias": 4.236,
+        "share_late_over_20": 0.18,
+        "bias": 3.709,
         "n": 900
       },
       "cnn": {
@@ -300,22 +300,22 @@
   "summary": {
     "ridge": {
       "rmse": {
-        "mean": 21.991,
-        "std": 0.867
+        "mean": 21.478,
+        "std": 0.938
       },
       "score_mean": {
-        "mean": 26.928,
-        "std": 8.6
+        "mean": 27.811,
+        "std": 10.899
       }
     },
     "boosted_trees": {
       "rmse": {
-        "mean": 20.511,
-        "std": 0.928
+        "mean": 20.293,
+        "std": 0.883
       },
       "score_mean": {
-        "mean": 34.001,
-        "std": 17.422
+        "mean": 33.356,
+        "std": 15.541
       }
     },
     "cnn": {
