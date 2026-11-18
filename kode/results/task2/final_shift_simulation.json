@@ -1,0 +1,182 @@
+{
+  "machines_pooled": 252,
+  "cuts_pooled": 1620,
+  "simulations": 2000,
+  "test_size": 300,
+  "spread_between_test_sets_no_shift": {
+    "rmse": 1.14,
+    "score_sum": 4658.43
+  },
+  "criterion": "net benefit = score improvement / spread(score) - RMSE increase / spread(RMSE), medians over simulated test sets; both metrics weighted equally (3 points each)",
+  "shifts": {
+    "0": {
+      "rmse_median": 20.33,
+      "score_sum_median": 6578.0,
+      "rmse_change_vs_0": 0.0,
+      "score_change_vs_0_pct": 0.0,
+      "p_rmse_better_than_0": 0.0,
+      "p_score_better_than_0": 0.0,
+      "score_sum_p90": 15636.0,
+      "rmse_cost_in_spreads": 0.0,
+      "score_gain_in_spreads": 0.0,
+      "net_benefit": 0.0
+    },
+    "1": {
+      "rmse_median": 20.31,
+      "score_sum_median": 6047.0,
+      "rmse_change_vs_0": -0.02,
+      "score_change_vs_0_pct": -8.2,
+      "p_rmse_better_than_0": 0.609,
+      "p_score_better_than_0": 1.0,
+      "score_sum_p90": 14241.0,
+      "rmse_cost_in_spreads": -0.013,
+      "score_gain_in_spreads": 0.115,
+      "net_benefit": 0.128
+    },
+    "2": {
+      "rmse_median": 20.35,
+      "score_sum_median": 5578.0,
+      "rmse_change_vs_0": 0.02,
+      "score_change_vs_0_pct": -15.4,
+      "p_rmse_better_than_0": 0.448,
+      "p_score_better_than_0": 1.0,
+      "score_sum_p90": 12970.0,
+      "rmse_cost_in_spreads": 0.016,
+      "score_gain_in_spreads": 0.216,
+      "net_benefit": 0.2
+    },
+    "3": {
+      "rmse_median": 20.43,
+      "score_sum_median": 5174.0,
+      "rmse_change_vs_0": 0.1,
+      "score_change_vs_0_pct": -21.7,
+      "p_rmse_better_than_0": 0.295,
+      "p_score_better_than_0": 1.0,
+      "score_sum_p90": 11843.0,
+      "rmse_cost_in_spreads": 0.089,
+      "score_gain_in_spreads": 0.306,
+      "net_benefit": 0.217
+    },
+    "4": {
+      "rmse_median": 20.56,
+      "score_sum_median": 4812.0,
+      "rmse_change_vs_0": 0.23,
+      "score_change_vs_0_pct": -27.3,
+      "p_rmse_better_than_0": 0.165,
+      "p_score_better_than_0": 1.0,
+      "score_sum_p90": 10847.0,
+      "rmse_cost_in_spreads": 0.205,
+      "score_gain_in_spreads": 0.384,
+      "net_benefit": 0.179
+    },
+    "5": {
+      "rmse_median": 20.73,
+      "score_sum_median": 4499.0,
+      "rmse_change_vs_0": 0.41,
+      "score_change_vs_0_pct": -32.2,
+      "p_rmse_better_than_0": 0.083,
+      "p_score_better_than_0": 1.0,
+      "score_sum_p90": 9962.0,
+      "rmse_cost_in_spreads": 0.358,
+      "score_gain_in_spreads": 0.453,
+      "net_benefit": 0.095
+    },
+    "6": {
+      "rmse_median": 20.96,
+      "score_sum_median": 4229.0,
+      "rmse_change_vs_0": 0.63,
+      "score_change_vs_0_pct": -36.3,
+      "p_rmse_better_than_0": 0.039,
+      "p_score_better_than_0": 1.0,
+      "score_sum_p90": 9170.0,
+      "rmse_cost_in_spreads": 0.55,
+      "score_gain_in_spreads": 0.512,
+      "net_benefit": -0.038
+    },
+    "7": {
+      "rmse_median": 21.23,
+      "score_sum_median": 3992.0,
+      "rmse_change_vs_0": 0.89,
+      "score_change_vs_0_pct": -39.9,
+      "p_rmse_better_than_0": 0.016,
+      "p_score_better_than_0": 1.0,
+      "score_sum_p90": 8459.0,
+      "rmse_cost_in_spreads": 0.78,
+      "score_gain_in_spreads": 0.561,
+      "net_benefit": -0.219
+    },
+    "8": {
+      "rmse_median": 21.53,
+      "score_sum_median": 3797.0,
+      "rmse_change_vs_0": 1.19,
+      "score_change_vs_0_pct": -42.8,
+      "p_rmse_better_than_0": 0.006,
+      "p_score_better_than_0": 1.0,
+      "score_sum_p90": 7832.0,
+      "rmse_cost_in_spreads": 1.043,
+      "score_gain_in_spreads": 0.604,
+      "net_benefit": -0.439
+    },
+    "9": {
+      "rmse_median": 21.87,
+      "score_sum_median": 3639.0,
+      "rmse_change_vs_0": 1.52,
+      "score_change_vs_0_pct": -45.3,
+      "p_rmse_better_than_0": 0.002,
+      "p_score_better_than_0": 1.0,
+      "score_sum_p90": 7289.0,
+      "rmse_cost_in_spreads": 1.341,
+      "score_gain_in_spreads": 0.637,
+      "net_benefit": -0.704
+    },
+    "10": {
+      "rmse_median": 22.24,
+      "score_sum_median": 3524.0,
+      "rmse_change_vs_0": 1.89,
+      "score_change_vs_0_pct": -47.2,
+      "p_rmse_better_than_0": 0.0,
+      "p_score_better_than_0": 1.0,
+      "score_sum_p90": 6812.0,
+      "rmse_cost_in_spreads": 1.666,
+      "score_gain_in_spreads": 0.664,
+      "net_benefit": -1.002
+    },
+    "11": {
+      "rmse_median": 22.63,
+      "score_sum_median": 3436.0,
+      "rmse_change_vs_0": 2.3,
+      "score_change_vs_0_pct": -48.7,
+      "p_rmse_better_than_0": 0.0,
+      "p_score_better_than_0": 1.0,
+      "score_sum_p90": 6401.0,
+      "rmse_cost_in_spreads": 2.022,
+      "score_gain_in_spreads": 0.684,
+      "net_benefit": -1.338
+    },
+    "12": {
+      "rmse_median": 23.07,
+      "score_sum_median": 3385.0,
+      "rmse_change_vs_0": 2.73,
+      "score_change_vs_0_pct": -49.7,
+      "p_rmse_better_than_0": 0.0,
+      "p_score_better_than_0": 1.0,
+      "score_sum_p90": 6066.0,
+      "rmse_cost_in_spreads": 2.4,
+      "score_gain_in_spreads": 0.698,
+      "net_benefit": -1.702
+    },
+    "13": {
+      "rmse_median": 23.53,
+      "score_sum_median": 3358.0,
+      "rmse_change_vs_0": 3.19,
+      "score_change_vs_0_pct": -50.2,
+      "p_rmse_better_than_0": 0.0,
+      "p_score_better_than_0": 0.999,
+      "score_sum_p90": 5773.0,
+      "rmse_cost_in_spreads": 2.803,
+      "score_gain_in_spreads": 0.705,
+      "net_benefit": -2.098
+    }
+  },
+  "best_shift_by_net_benefit": 3
+}
