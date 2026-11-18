@@ -174,7 +174,7 @@ def work() -> dict:
 
 
 def main() -> None:
-    files = [OUT / "uncertainty.json"] + [CKPT / f"{TAG}_seed{s}.pt" for s in EXTRA_SEEDS]
+    files = [OUT / "uncertainty.json", FIG_DIR / "t2_uncertainty.png"] + [CKPT / f"{TAG}_seed{s}.pt" for s in EXTRA_SEEDS]
     run_isolated("task2_rul.uncertainty", "--work", files, "uncertainty")
 
 

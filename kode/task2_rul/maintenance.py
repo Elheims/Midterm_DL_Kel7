@@ -145,7 +145,8 @@ def work() -> dict:
 
 
 def main() -> None:
-    run_isolated("task2_rul.maintenance", "--work", [OUT / "maintenance.json"], "maintenance")
+    run_isolated("task2_rul.maintenance", "--work", [OUT / "maintenance.json", FIG_DIR / "t2_maintenance.png"],
+                 "maintenance")
 
 
 if __name__ == "__main__":
