@@ -1,0 +1,32 @@
+# Data and big artifacts (never commit; submission needs link/steps for >100 MB)
+data/
+*.zip
+*.npy
+*.npz
+*.parquet
+kode/results/**/checkpoints/*
+*.pt
+*.pth
+# final Task 2 weights are small (~180 KB each) and must be in the repo
+!kode/task2_rul/final_weights/*.pt
+# validation models used by the oral-exam demo (python -m task2_rul.demo)
+!kode/results/task2/checkpoints/gru_W50_seed[0-2].pt
+!kode/results/task2/checkpoints/cnn_W50_seed[0-2].pt
+*.ckpt
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.ipynb_checkpoints/
+
+# LaTeX build files
+laporan/*.aux
+laporan/*.log
+laporan/*.out
+laporan/*.toc
+laporan/*.bbl
+laporan/*.blg
+laporan/*.fls
+laporan/*.fdb_latexmk
+laporan/*.synctex.gz
