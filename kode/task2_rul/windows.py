@@ -146,7 +146,7 @@ def main() -> dict:
         te_last = te.groupby("id_unit").siklus.max().to_numpy()
         assert (w_te.cycle == te_last).all() and len(w_te) == te.id_unit.nunique()
         # check the checker: shift every window one cycle into the future; the check must fail
-        leaky = dataclasses.replace(w_all, ends=w_all.ends + 1)
+        leaky = dataclasses.replace(w_all, ends=np.minimum(w_all.ends + 1, len(w_all.data) - 1))
         try:
             check_windows(leaky, tr, feats)
         except AssertionError:
