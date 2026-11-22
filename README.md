@@ -17,7 +17,7 @@ Working folders that are not part of the submission: `data/` (git-ignored), `cat
 
 ## Who does what
 
-- Task 2 (RUL regression): member A (this folder's current focus)
+- Task 2 (RUL regression): member A 
 - Task 1 (classification): member B
 - Task 3 (clustering): member B
 
