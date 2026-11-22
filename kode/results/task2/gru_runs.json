@@ -1,0 +1,56 @@
+{
+  "gru_W30": {
+    "n_params": 44545,
+    "stop_rmse_best_mean": 21.038,
+    "rmse": {
+      "mean": 21.591,
+      "std": 0.103
+    },
+    "score_mean": {
+      "mean": 39.624,
+      "std": 1.308
+    },
+    "score_median": {
+      "mean": 1.388,
+      "std": 0.154
+    },
+    "share_late_over_20": {
+      "mean": 0.162,
+      "std": 0.005
+    },
+    "ensemble_rmse": 21.447,
+    "best_epochs": [
+      4,
+      6,
+      4
+    ],
+    "minutes_per_seed": 0.23
+  },
+  "gru_W50": {
+    "n_params": 44545,
+    "stop_rmse_best_mean": 20.148,
+    "rmse": {
+      "mean": 20.701,
+      "std": 0.098
+    },
+    "score_mean": {
+      "mean": 34.201,
+      "std": 6.129
+    },
+    "score_median": {
+      "mean": 1.588,
+      "std": 0.142
+    },
+    "share_late_over_20": {
+      "mean": 0.146,
+      "std": 0.004
+    },
+    "ensemble_rmse": 20.528,
+    "best_epochs": [
+      4,
+      3,
+      3
+    ],
+    "minutes_per_seed": 0.22
+  }
+}
