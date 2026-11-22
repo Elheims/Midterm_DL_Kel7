@@ -19,6 +19,6 @@ Working folders that are not part of the submission: `data/` (git-ignored), `cat
 
 - Task 2 (RUL regression): member A 
 - Task 1 (classification): member B
-- Task 3 (clustering): member B
+- Task 3 (clustering): member C
 
 See `kode/README.md` for how to set up the environment and run things.
