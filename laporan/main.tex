@@ -1,0 +1,32 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{subcaption}
+\graphicspath{{figures/}}
+
+\title{Hands-on Deep Learning: Classification, Regression, and Clustering\\
+\large Laporan UTS Deep Learning}
+\author{Anggota 1 \and Anggota 2}
+\date{November 2026}
+
+\begin{document}
+\maketitle
+
+% Max 18 pages excluding appendices.
+\input{sections/task1_klasifikasi}
+\input{sections/task2_rul}
+\input{sections/task3_clustering}
+
+\bibliographystyle{plain}
+\bibliography{refs}
+
+\clearpage  % appendix starts on a new page, so the 18-page limit is easy to check
+\appendix
+\input{sections/lampiran}
+
+\end{document}

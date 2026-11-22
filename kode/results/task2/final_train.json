@@ -1,0 +1,52 @@
+{
+  "fit_machines": 810,
+  "stop_machines": 90,
+  "kept_sensors": [
+    "s02",
+    "s03",
+    "s04",
+    "s07",
+    "s08",
+    "s09",
+    "s11",
+    "s12",
+    "s13",
+    "s14",
+    "s15",
+    "s17",
+    "s20",
+    "s21"
+  ],
+  "seeds": {
+    "0": {
+      "best_stop_rmse": 20.993,
+      "best_epoch": 7
+    },
+    "1": {
+      "best_stop_rmse": 20.862,
+      "best_epoch": 5
+    },
+    "2": {
+      "best_stop_rmse": 20.643,
+      "best_epoch": 7
+    },
+    "3": {
+      "best_stop_rmse": 20.687,
+      "best_epoch": 8
+    },
+    "4": {
+      "best_stop_rmse": 20.862,
+      "best_epoch": 6
+    }
+  },
+  "ensemble_stop": {
+    "rmse": 20.585,
+    "score_sum": 17582.1,
+    "score_mean": 19.536,
+    "score_median": 1.471,
+    "score_share_worst5pct": 0.716,
+    "share_late_over_20": 0.164,
+    "bias": 1.891,
+    "n": 900
+  }
+}
