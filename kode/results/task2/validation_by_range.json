@@ -1,0 +1,338 @@
+{
+  "ridge": {
+    "overall": {
+      "rmse": 22.795,
+      "score_sum": 37510.3,
+      "score_mean": 41.678,
+      "score_median": 1.779,
+      "score_share_worst5pct": 0.815,
+      "share_late_over_20": 0.223,
+      "bias": 3.923,
+      "n": 900
+    },
+    "ranges": {
+      "0-25": {
+        "rmse": 14.963,
+        "score_mean": 4.029,
+        "bias": 3.076,
+        "n": 122
+      },
+      "26-50": {
+        "rmse": 21.897,
+        "score_mean": 141.546,
+        "bias": 10.885,
+        "n": 116
+      },
+      "51-100": {
+        "rmse": 31.591,
+        "score_mean": 77.418,
+        "bias": 20.521,
+        "n": 227
+      },
+      "101-149": {
+        "rmse": 22.538,
+        "score_mean": 12.181,
+        "bias": 3.47,
+        "n": 172
+      },
+      "150": {
+        "rmse": 16.408,
+        "score_mean": 3.537,
+        "bias": -12.785,
+        "n": 263
+      }
+    }
+  },
+  "boosted_trees": {
+    "overall": {
+      "rmse": 21.506,
+      "score_sum": 51292.8,
+      "score_mean": 56.992,
+      "score_median": 1.255,
+      "score_share_worst5pct": 0.897,
+      "share_late_over_20": 0.173,
+      "bias": 2.983,
+      "n": 900
+    },
+    "ranges": {
+      "0-25": {
+        "rmse": 10.776,
+        "score_mean": 2.059,
+        "bias": 5.0,
+        "n": 122
+      },
+      "26-50": {
+        "rmse": 19.843,
+        "score_mean": 219.892,
+        "bias": 3.698,
+        "n": 116
+      },
+      "51-100": {
+        "rmse": 31.83,
+        "score_mean": 102.071,
+        "bias": 15.376,
+        "n": 227
+      },
+      "101-149": {
+        "rmse": 20.714,
+        "score_mean": 9.713,
+        "bias": 5.795,
+        "n": 172
+      },
+      "150": {
+        "rmse": 14.148,
+        "score_mean": 2.636,
+        "bias": -10.803,
+        "n": 263
+      }
+    }
+  },
+  "cnn": {
+    "overall_seed_mean_rmse": 21.455,
+    "ranges": {
+      "0-25": {
+        "rmse": {
+          "mean": 9.519,
+          "std": 1.528
+        },
+        "score_mean": {
+          "mean": 1.565,
+          "std": 0.571
+        },
+        "bias": {
+          "mean": 3.921,
+          "std": 4.559
+        },
+        "n": 122
+      },
+      "26-50": {
+        "rmse": {
+          "mean": 18.066,
+          "std": 2.125
+        },
+        "score_mean": {
+          "mean": 114.885,
+          "std": 35.182
+        },
+        "bias": {
+          "mean": 2.43,
+          "std": 1.362
+        },
+        "n": 116
+      },
+      "51-100": {
+        "rmse": {
+          "mean": 29.724,
+          "std": 2.062
+        },
+        "score_mean": {
+          "mean": 56.32,
+          "std": 16.175
+        },
+        "bias": {
+          "mean": 13.814,
+          "std": 2.219
+        },
+        "n": 227
+      },
+      "101-149": {
+        "rmse": {
+          "mean": 20.246,
+          "std": 0.554
+        },
+        "score_mean": {
+          "mean": 8.387,
+          "std": 2.259
+        },
+        "bias": {
+          "mean": 0.515,
+          "std": 2.859
+        },
+        "n": 172
+      },
+      "150": {
+        "rmse": {
+          "mean": 18.744,
+          "std": 2.284
+        },
+        "score_mean": {
+          "mean": 4.124,
+          "std": 1.378
+        },
+        "bias": {
+          "mean": -16.364,
+          "std": 2.412
+        },
+        "n": 263
+      }
+    },
+    "ensemble": {
+      "overall": {
+        "rmse": 20.889,
+        "score_sum": 26713.1,
+        "score_mean": 29.681,
+        "score_median": 1.898,
+        "score_share_worst5pct": 0.833,
+        "share_late_over_20": 0.15,
+        "bias": -0.354,
+        "n": 900
+      },
+      "ranges": {
+        "0-25": {
+          "rmse": 8.403,
+          "score_mean": 1.219,
+          "bias": 3.921,
+          "n": 122
+        },
+        "26-50": {
+          "rmse": 17.602,
+          "score_mean": 108.94,
+          "bias": 2.43,
+          "n": 116
+        },
+        "51-100": {
+          "rmse": 29.225,
+          "score_mean": 51.401,
+          "bias": 13.814,
+          "n": 227
+        },
+        "101-149": {
+          "rmse": 19.579,
+          "score_mean": 7.409,
+          "bias": 0.515,
+          "n": 172
+        },
+        "150": {
+          "rmse": 18.328,
+          "score_mean": 3.745,
+          "bias": -16.364,
+          "n": 263
+        }
+      }
+    }
+  },
+  "gru": {
+    "overall_seed_mean_rmse": 20.701,
+    "ranges": {
+      "0-25": {
+        "rmse": {
+          "mean": 8.46,
+          "std": 0.326
+        },
+        "score_mean": {
+          "mean": 1.193,
+          "std": 0.118
+        },
+        "bias": {
+          "mean": 2.648,
+          "std": 1.697
+        },
+        "n": 122
+      },
+      "26-50": {
+        "rmse": {
+          "mean": 17.795,
+          "std": 0.291
+        },
+        "score_mean": {
+          "mean": 126.27,
+          "std": 42.064
+        },
+        "bias": {
+          "mean": 0.051,
+          "std": 0.726
+        },
+        "n": 116
+      },
+      "51-100": {
+        "rmse": {
+          "mean": 29.648,
+          "std": 0.519
+        },
+        "score_mean": {
+          "mean": 60.13,
+          "std": 6.031
+        },
+        "bias": {
+          "mean": 12.608,
+          "std": 0.353
+        },
+        "n": 227
+      },
+      "101-149": {
+        "rmse": {
+          "mean": 20.656,
+          "std": 0.569
+        },
+        "score_mean": {
+          "mean": 9.098,
+          "std": 1.179
+        },
+        "bias": {
+          "mean": 2.371,
+          "std": 1.306
+        },
+        "n": 172
+      },
+      "150": {
+        "rmse": {
+          "mean": 15.944,
+          "std": 1.385
+        },
+        "score_mean": {
+          "mean": 2.94,
+          "std": 0.45
+        },
+        "bias": {
+          "mean": -13.672,
+          "std": 1.573
+        },
+        "n": 263
+      }
+    },
+    "ensemble": {
+      "overall": {
+        "rmse": 20.528,
+        "score_sum": 29629.0,
+        "score_mean": 32.921,
+        "score_median": 1.588,
+        "score_share_worst5pct": 0.853,
+        "share_late_over_20": 0.14,
+        "bias": 0.003,
+        "n": 900
+      },
+      "ranges": {
+        "0-25": {
+          "rmse": 8.2,
+          "score_mean": 1.125,
+          "bias": 2.648,
+          "n": 122
+        },
+        "26-50": {
+          "rmse": 17.639,
+          "score_mean": 119.651,
+          "bias": 0.05,
+          "n": 116
+        },
+        "51-100": {
+          "rmse": 29.468,
+          "score_mean": 58.784,
+          "bias": 12.607,
+          "n": 227
+        },
+        "101-149": {
+          "rmse": 20.466,
+          "score_mean": 8.834,
+          "bias": 2.371,
+          "n": 172
+        },
+        "150": {
+          "rmse": 15.817,
+          "score_mean": 2.847,
+          "bias": -13.672,
+          "n": 263
+        }
+      }
+    }
+  }
+}
