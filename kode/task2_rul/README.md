@@ -13,13 +13,13 @@ Output: `prediksi_rul.csv` with columns `id_unit,rul`, rul in [0, 150].
   - `labels.py`: `add_rul()` (RUL = min(150, failure cycle − cycle)), `check_labels()`, figure `t2_labels`, numbers in `results/task2/labels.json`
 - [x] c. Sliding windows, variable-length histories, no future leakage
   - `windows.py`: `make_windows()` (window = last W cycles ending at t, target RUL(t); front padding for short histories), `check_windows()` (leakage checks, plus a deliberately leaky version that must be rejected), figure `t2_windows`, numbers in `results/task2/windows.json`
-- [ ] d. Models: >= 2 sequence architectures + non-deep-learning baseline
+- [x] d. Models: >= 2 sequence architectures + non-deep-learning baseline
   - [x] `evaluate.py`: the ruler (80/20 machine split, 5 test-like cuts per held-out machine, RMSE + asymmetric score)
   - [x] `baseline.py`: 42 window features (last-5 mean, mean, slope per sensor) → Ridge, boosted trees
   - [x] 1D-CNN: `models.py` (CNN1D), `train_nn.py` (training loop, early stopping, overfit-one-batch), `deep.py` (`cnn_ablation()`: original + 3 fixes × 3 seeds → `results/task2/cnn_ablation.json`, figures `t2_cnn_*`). Chosen: W=50 (best on the early-stop machines)
   - [x] error analysis of the CNN: `error_analysis.py` (wear onset vs prediction error, 3 seeds × 3 thresholds) → `results/task2/error_analysis.json`, figure `t2_error_analysis`
   - [x] GRU: `models.py` (GRUNet, 2 layers × 64, 44.5k params), `deep.gru_runs()` (W = 30 and 50, 3 seeds each → `results/task2/gru_runs.json`, figures `t2_gru_*`). Chosen: W=50 (best on the early-stop machines). In `run_all` it runs as a separate process (`gru_runs_isolated`), see "Windows note" below
-  - [ ] ablations (W = 30 vs 50, ...)
+  - [x] ablations (W = 30 vs 50 for CNN and GRU; CNN pooled head vs flatten; CNN stronger regularisation)
 - [x] e. Validation split by machine; RMSE and asymmetric score per RUL range
   - `validation.py`: per-range table (0-25, 26-50, 51-100, 101-149, 150) for Ridge, trees, CNN W50, GRU W50 → `results/task2/validation_by_range.json`; 5-fold CV by machine, every model retrained per fold → `validation_cv.json`; figure `t2_validation`
 - [x] f. Uncertainty: prediction intervals, when to service a machine
