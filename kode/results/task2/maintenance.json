@@ -1,0 +1,541 @@
+{
+  "lead_time": 10,
+  "interval_scale_q": 3.54,
+  "machines": 180,
+  "replayed_cycles": 41875,
+  "rules": {
+    "point": {
+      "0": {
+        "share_too_late": 1.0,
+        "never_fired": 180,
+        "mean_wasted_life": 0.0,
+        "median_wasted_life": 0.0
+      },
+      "2": {
+        "share_too_late": 1.0,
+        "never_fired": 180,
+        "mean_wasted_life": 0.0,
+        "median_wasted_life": 0.0
+      },
+      "4": {
+        "share_too_late": 0.994,
+        "never_fired": 163,
+        "mean_wasted_life": 0.2,
+        "median_wasted_life": 0.0
+      },
+      "6": {
+        "share_too_late": 0.972,
+        "never_fired": 130,
+        "mean_wasted_life": 1.3,
+        "median_wasted_life": 0.0
+      },
+      "8": {
+        "share_too_late": 0.911,
+        "never_fired": 102,
+        "mean_wasted_life": 3.0,
+        "median_wasted_life": 0.0
+      },
+      "10": {
+        "share_too_late": 0.767,
+        "never_fired": 71,
+        "mean_wasted_life": 5.3,
+        "median_wasted_life": 2.0
+      },
+      "12": {
+        "share_too_late": 0.594,
+        "never_fired": 52,
+        "mean_wasted_life": 8.1,
+        "median_wasted_life": 6.0
+      },
+      "14": {
+        "share_too_late": 0.506,
+        "never_fired": 42,
+        "mean_wasted_life": 10.7,
+        "median_wasted_life": 9.0
+      },
+      "16": {
+        "share_too_late": 0.372,
+        "never_fired": 31,
+        "mean_wasted_life": 13.4,
+        "median_wasted_life": 13.0
+      },
+      "18": {
+        "share_too_late": 0.289,
+        "never_fired": 20,
+        "mean_wasted_life": 16.3,
+        "median_wasted_life": 16.5
+      },
+      "20": {
+        "share_too_late": 0.222,
+        "never_fired": 13,
+        "mean_wasted_life": 19.2,
+        "median_wasted_life": 19.5
+      },
+      "22": {
+        "share_too_late": 0.167,
+        "never_fired": 5,
+        "mean_wasted_life": 22.0,
+        "median_wasted_life": 22.0
+      },
+      "24": {
+        "share_too_late": 0.128,
+        "never_fired": 1,
+        "mean_wasted_life": 24.7,
+        "median_wasted_life": 25.0
+      },
+      "26": {
+        "share_too_late": 0.1,
+        "never_fired": 1,
+        "mean_wasted_life": 27.0,
+        "median_wasted_life": 26.0
+      },
+      "28": {
+        "share_too_late": 0.061,
+        "never_fired": 0,
+        "mean_wasted_life": 29.6,
+        "median_wasted_life": 29.0
+      },
+      "30": {
+        "share_too_late": 0.028,
+        "never_fired": 0,
+        "mean_wasted_life": 32.0,
+        "median_wasted_life": 32.0
+      },
+      "32": {
+        "share_too_late": 0.017,
+        "never_fired": 0,
+        "mean_wasted_life": 34.3,
+        "median_wasted_life": 34.0
+      },
+      "34": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 36.4,
+        "median_wasted_life": 36.0
+      },
+      "36": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 39.0,
+        "median_wasted_life": 38.0
+      },
+      "38": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 40.8,
+        "median_wasted_life": 40.0
+      },
+      "40": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 43.1,
+        "median_wasted_life": 42.0
+      },
+      "42": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 45.4,
+        "median_wasted_life": 44.5
+      },
+      "44": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 47.2,
+        "median_wasted_life": 47.0
+      },
+      "46": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 49.3,
+        "median_wasted_life": 48.5
+      },
+      "48": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 51.0,
+        "median_wasted_life": 50.0
+      },
+      "50": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 52.9,
+        "median_wasted_life": 51.0
+      },
+      "52": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 54.8,
+        "median_wasted_life": 52.5
+      },
+      "54": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 56.6,
+        "median_wasted_life": 54.5
+      },
+      "56": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 58.5,
+        "median_wasted_life": 56.0
+      },
+      "58": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 60.5,
+        "median_wasted_life": 58.0
+      },
+      "60": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 62.2,
+        "median_wasted_life": 61.0
+      },
+      "62": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 63.9,
+        "median_wasted_life": 62.0
+      },
+      "64": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 65.5,
+        "median_wasted_life": 64.0
+      },
+      "66": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 66.7,
+        "median_wasted_life": 65.0
+      },
+      "68": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 68.3,
+        "median_wasted_life": 66.0
+      },
+      "70": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 70.3,
+        "median_wasted_life": 68.0
+      },
+      "72": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 71.6,
+        "median_wasted_life": 70.0
+      },
+      "74": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 72.8,
+        "median_wasted_life": 70.5
+      },
+      "76": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 74.2,
+        "median_wasted_life": 71.0
+      },
+      "78": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 75.8,
+        "median_wasted_life": 74.0
+      },
+      "80": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 78.4,
+        "median_wasted_life": 75.5
+      }
+    },
+    "cautious": {
+      "0": {
+        "share_too_late": 0.322,
+        "never_fired": 26,
+        "mean_wasted_life": 15.1,
+        "median_wasted_life": 15.0
+      },
+      "2": {
+        "share_too_late": 0.244,
+        "never_fired": 10,
+        "mean_wasted_life": 18.4,
+        "median_wasted_life": 18.5
+      },
+      "4": {
+        "share_too_late": 0.194,
+        "never_fired": 6,
+        "mean_wasted_life": 22.0,
+        "median_wasted_life": 22.0
+      },
+      "6": {
+        "share_too_late": 0.122,
+        "never_fired": 3,
+        "mean_wasted_life": 25.6,
+        "median_wasted_life": 25.0
+      },
+      "8": {
+        "share_too_late": 0.072,
+        "never_fired": 0,
+        "mean_wasted_life": 28.7,
+        "median_wasted_life": 28.0
+      },
+      "10": {
+        "share_too_late": 0.033,
+        "never_fired": 0,
+        "mean_wasted_life": 32.0,
+        "median_wasted_life": 32.0
+      },
+      "12": {
+        "share_too_late": 0.006,
+        "never_fired": 0,
+        "mean_wasted_life": 35.3,
+        "median_wasted_life": 35.0
+      },
+      "14": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 38.1,
+        "median_wasted_life": 37.0
+      },
+      "16": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 41.1,
+        "median_wasted_life": 39.0
+      },
+      "18": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 43.6,
+        "median_wasted_life": 42.0
+      },
+      "20": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 46.4,
+        "median_wasted_life": 44.5
+      },
+      "22": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 49.2,
+        "median_wasted_life": 48.0
+      },
+      "24": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 51.7,
+        "median_wasted_life": 50.0
+      },
+      "26": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 54.1,
+        "median_wasted_life": 52.5
+      },
+      "28": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 56.8,
+        "median_wasted_life": 54.0
+      },
+      "30": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 59.2,
+        "median_wasted_life": 57.0
+      },
+      "32": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 61.3,
+        "median_wasted_life": 59.0
+      },
+      "34": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 63.8,
+        "median_wasted_life": 62.0
+      },
+      "36": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 66.3,
+        "median_wasted_life": 65.0
+      },
+      "38": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 68.4,
+        "median_wasted_life": 66.5
+      },
+      "40": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 70.3,
+        "median_wasted_life": 69.0
+      },
+      "42": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 72.8,
+        "median_wasted_life": 69.5
+      },
+      "44": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 74.7,
+        "median_wasted_life": 72.0
+      },
+      "46": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 77.5,
+        "median_wasted_life": 73.0
+      },
+      "48": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 79.9,
+        "median_wasted_life": 76.0
+      },
+      "50": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 83.1,
+        "median_wasted_life": 80.0
+      },
+      "52": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 86.2,
+        "median_wasted_life": 83.0
+      },
+      "54": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 88.4,
+        "median_wasted_life": 86.5
+      },
+      "56": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 90.3,
+        "median_wasted_life": 88.0
+      },
+      "58": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 93.2,
+        "median_wasted_life": 92.0
+      },
+      "60": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 95.3,
+        "median_wasted_life": 93.0
+      },
+      "62": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 97.7,
+        "median_wasted_life": 94.0
+      },
+      "64": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 100.4,
+        "median_wasted_life": 95.5
+      },
+      "66": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 102.1,
+        "median_wasted_life": 97.0
+      },
+      "68": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 103.9,
+        "median_wasted_life": 101.5
+      },
+      "70": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 105.8,
+        "median_wasted_life": 102.0
+      },
+      "72": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 108.0,
+        "median_wasted_life": 103.0
+      },
+      "74": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 111.3,
+        "median_wasted_life": 105.0
+      },
+      "76": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 114.4,
+        "median_wasted_life": 109.0
+      },
+      "78": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 118.0,
+        "median_wasted_life": 113.0
+      },
+      "80": {
+        "share_too_late": 0.0,
+        "never_fired": 0,
+        "mean_wasted_life": 125.5,
+        "median_wasted_life": 119.5
+      }
+    }
+  },
+  "interval_width_near_decision": {
+    "mean": 40.5,
+    "sd": 5.7,
+    "p10": 33.6,
+    "p90": 48.1,
+    "corr_with_abs_error": 0.119
+  },
+  "least_waste_at_risk": {
+    "point": {
+      "0.0": {
+        "L": 34,
+        "mean_wasted_life": 36.4
+      },
+      "0.01": {
+        "L": 34,
+        "mean_wasted_life": 36.4
+      },
+      "0.05": {
+        "L": 30,
+        "mean_wasted_life": 32.0
+      }
+    },
+    "cautious": {
+      "0.0": {
+        "L": 14,
+        "mean_wasted_life": 38.1
+      },
+      "0.01": {
+        "L": 12,
+        "mean_wasted_life": 35.3
+      },
+      "0.05": {
+        "L": 10,
+        "mean_wasted_life": 32.0
+      }
+    }
+  }
+}
