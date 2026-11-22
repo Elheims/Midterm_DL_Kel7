@@ -1,0 +1,45 @@
+{
+  "features": [
+    "s02",
+    "s03",
+    "s04",
+    "s07",
+    "s08",
+    "s09",
+    "s11",
+    "s12",
+    "s13",
+    "s14",
+    "s15",
+    "s17",
+    "s20",
+    "s21"
+  ],
+  "n_features": 14,
+  "W30": {
+    "train_windows": 228074,
+    "train_windows_incl_padded": 254174,
+    "share_train_windows_at_cap": 0.4115,
+    "test_windows": 300,
+    "test_machines_needing_padding": 0,
+    "window_shape": [
+      30,
+      14
+    ],
+    "MB_if_all_copied": 365.4,
+    "MB_stored": 15.0
+  },
+  "W50": {
+    "train_windows": 210074,
+    "train_windows_incl_padded": 254174,
+    "share_train_windows_at_cap": 0.3683,
+    "test_windows": 300,
+    "test_machines_needing_padding": 0,
+    "window_shape": [
+      50,
+      14
+    ],
+    "MB_if_all_copied": 561.0,
+    "MB_stored": 15.9
+  }
+}
