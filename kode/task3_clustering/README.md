@@ -1,6 +1,6 @@
 # Task 3: Multimodal clustering
 
-Owned by member B. Output: `cluster.csv` (repo root) with columns `id_sampel,cluster`.
+Owned by Sandy Hidayatullah (`sandyxd18`). Output: `cluster.csv` (repo root) with columns `id_sampel,cluster`.
 
 Everything is in one notebook: `task3_clustering.ipynb`. It covers exploration, SimCLR for images and spectra,
 two fusion strategies, KMeans / GMM / Agglomerative / DEC, choosing K with several criteria, UMAP/t-SNE analysis, and writing `cluster.csv`.
