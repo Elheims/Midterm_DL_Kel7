@@ -6,7 +6,24 @@ Usage:
 """
 import argparse
 
-TASKS = {1: [], 2: [], 3: []}  # each task registers its pipeline steps here
+def run_task3() -> None:
+    """Execute the Task 3 notebook; it writes cluster.csv, results.json and figures itself."""
+    import subprocess
+    import sys
+    from pathlib import Path
+
+    here = Path(__file__).resolve().parent
+    out = here / "results" / "task3"
+    out.mkdir(parents=True, exist_ok=True)
+    subprocess.run(
+        [sys.executable, "-m", "jupyter", "nbconvert", "--to", "notebook", "--execute",
+         str(here / "task3_clustering" / "task3_clustering.ipynb"), "--output-dir", str(out),
+         "--ExecutePreprocessor.timeout=-1"],
+        check=True,
+    )
+
+
+TASKS = {1: [], 2: [], 3: [run_task3]}  # each task registers its pipeline steps here
 
 
 def main() -> None:
