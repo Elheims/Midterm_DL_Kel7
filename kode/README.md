@@ -19,8 +19,10 @@ Put the extracted `data_uts_dl.zip` into `../data/raw/` (git-ignored). `kamus_da
 ## Reproduce everything
 
 ```bash
-python run_all.py            # all tasks
-python run_all.py --task 2   # only Task 2 (RUL)
+python run_all.py            # all implemented tasks (reproduces every report number + CSVs)
+python run_all.py --task 1   # only Task 1 (multimodal defect classification)
+python run_all.py --task 2   # only Task 2 (RUL regression)
+python run_all.py --task 3   # only Task 3 (clustering, once merged)
 ```
 
 Task 2 takes about 14 minutes on an RTX 3060 Laptop GPU (verified 18 Nov 2026: exit code 0; a second
@@ -55,5 +57,6 @@ The report only quotes numbers that come from these files.
 
 ## Seeds
 
-Task 2 uses seeds 0, 1, 2 for every model comparison (`common/seed.py`) and seeds 0-4 for the five-GRU
-ensemble (`task2_rul/uncertainty.py`, `task2_rul/final.py`). Data splits and test-like cuts use seed 0.
+- Task 1 uses `seed=42` for the stratified 80/20 split and architecture/ablation comparisons, and `seeds = [42, 123, 999]` for the 3-seed final ensemble (`task1_klasifikasi/run_experiments.py`).
+- Task 2 uses seeds 0, 1, 2 for every model comparison (`common/seed.py`) and seeds 0-4 for the five-GRU
+  ensemble (`task2_rul/uncertainty.py`, `task2_rul/final.py`). Data splits and test-like cuts use seed 0.
