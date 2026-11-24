@@ -8,6 +8,8 @@ Each task registers its pipeline steps below as they are implemented.
 """
 import argparse
 
+from task1_klasifikasi import run_experiments as t1_run
+from task1_klasifikasi import train_eval as t1_train_eval
 from task2_rul import baseline as t2_baseline
 from task2_rul import check_preprocess as t2_check
 from task2_rul import deep as t2_deep
@@ -24,7 +26,8 @@ from task2_rul import windows as t2_windows
 
 # Filled in step by step as each part of a task is implemented.
 TASKS = {
-    1: [],  # Task 1 (classification): owned by member B
+    1: [t1_train_eval.run_sanity_check,  # (g) overfit-one-batch sanity check
+        t1_run.main],                    # (b-g) modalities, fusion, label smoothing, domain shift, missing sensor, 3-seed final + prediksi_klasifikasi.csv
     2: [t2_eda.main, t2_check.main,  # (a) exploration + preprocessing checks
         t2_labels.main,              # (b) RUL labels
         t2_windows.main,             # (c) sliding windows + leakage checks

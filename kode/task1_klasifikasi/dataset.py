@@ -7,17 +7,18 @@ CLASSES = ['normal', 'gores', 'noda', 'retak', 'gelembung', 'las_dingin', 'konta
 CLASS_TO_IDX = {c: i for i, c in enumerate(CLASSES)}
 IDX_TO_CLASS = {i: c for i, c in enumerate(CLASSES)}
 
+
 def compute_sensor_stats(sensors_array, df_meta=None, per_line=False):
     """
     Computes mean and std across valid (non-NaN) sensor readings.
     If per_line is True, computes separate stats for Line A and Line B.
-    sensors_array: (N, 3, 128)
+    sensors_array: (N, 3, 128) — cast to float64 before aggregation to avoid float16 overflow.
     """
     if not per_line or df_meta is None:
         stats = {}
         for ch in range(3):
             ch_data = sensors_array[:, ch, :]
-            valid = ch_data[~np.isnan(ch_data)]
+            valid = ch_data[~np.isnan(ch_data)].astype(np.float64)
             mean = float(np.mean(valid)) if len(valid) > 0 else 0.0
             std = float(np.std(valid)) if len(valid) > 0 else 1.0
             stats[ch] = (mean, max(std, 1e-6))
@@ -28,20 +29,21 @@ def compute_sensor_stats(sensors_array, df_meta=None, per_line=False):
             mask_line = (df_meta['lini'] == line).values
             for ch in range(3):
                 ch_data = sensors_array[mask_line, ch, :]
-                valid = ch_data[~np.isnan(ch_data)]
+                valid = ch_data[~np.isnan(ch_data)].astype(np.float64)
                 mean = float(np.mean(valid)) if len(valid) > 0 else 0.0
                 std = float(np.std(valid)) if len(valid) > 0 else 1.0
                 stats[line][ch] = (mean, max(std, 1e-6))
         return stats
 
+
 class MultimodalDefectDataset(Dataset):
-    def __init__(self, 
-                 images, 
-                 sensors, 
-                 meta_df, 
-                 sensor_stats=None, 
-                 is_train=False, 
-                 transform_img=None, 
+    def __init__(self,
+                 images,
+                 sensors,
+                 meta_df,
+                 sensor_stats=None,
+                 is_train=False,
+                 transform_img=None,
                  sensor_dropout_prob=0.15,
                  per_line_norm=False):
         """
@@ -56,7 +58,7 @@ class MultimodalDefectDataset(Dataset):
         self.transform_img = transform_img
         self.sensor_dropout_prob = sensor_dropout_prob
         self.per_line_norm = per_line_norm
-        
+
         # Precompute sensor stats if not provided
         if sensor_stats is None:
             self.sensor_stats = compute_sensor_stats(self.sensors, self.meta_df, per_line=per_line_norm)
@@ -75,18 +77,18 @@ class MultimodalDefectDataset(Dataset):
     def __getitem__(self, idx):
         # 1. Process Image: (64, 64) -> (1, 64, 64) float32 in [0, 1]
         img = self.images[idx].astype(np.float32) / 255.0
-        img = torch.tensor(img, dtype=torch.float32).unsqueeze(0) # (1, 64, 64)
+        img = torch.tensor(img, dtype=torch.float32).unsqueeze(0)  # (1, 64, 64)
 
         if self.transform_img is not None:
             img = self.transform_img(img)
 
         # 2. Process Sensor: (3, 128)
-        raw_sensor = self.sensors[idx].copy() # (3, 128)
+        raw_sensor = self.sensors[idx].copy()  # (3, 128)
         line = self.meta_df.loc[idx, 'lini'] if 'lini' in self.meta_df.columns else 'A'
-        
+
         # Missing indicator mask: 1 if observed, 0 if NaN
         is_nan = np.isnan(raw_sensor)
-        sensor_mask = (~is_nan).astype(np.float32) # (3, 128)
+        sensor_mask = (~is_nan).astype(np.float32)  # (3, 128)
 
         # Normalization
         norm_sensor = np.zeros_like(raw_sensor)
@@ -100,8 +102,6 @@ class MultimodalDefectDataset(Dataset):
             norm_sensor = np.zeros_like(norm_sensor)
             sensor_mask = np.zeros_like(sensor_mask)
 
-        # Combine sensor values and mask into 6-channel sensor representation: [val_0, val_1, val_2, mask_0, mask_1, mask_2]
-        # or keep (3, 128) + mask flag
         sensor_tensor = torch.tensor(norm_sensor, dtype=torch.float32)
         mask_tensor = torch.tensor(sensor_mask, dtype=torch.float32)
 
@@ -110,7 +110,7 @@ class MultimodalDefectDataset(Dataset):
             'sensor': sensor_tensor,
             'sensor_mask': mask_tensor,
             'id_unit': self.meta_df.loc[idx, 'id_unit'],
-            'lini': line
+            'lini': line,
         }
 
         if self.labels is not None:
