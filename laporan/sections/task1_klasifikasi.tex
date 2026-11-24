@@ -1,2 +1,163 @@
 \section{Task 1: Multimodal Classification of Product Defects}
-% Written by member B.
+\label{sec:t1}
+% Code: kode/task1_klasifikasi/ (python run_all.py --task 1).
+% Fill [TBD] entries from kode/results/task1/experiment_summary.json,
+% per_class_f1_comparison.csv, and likely_mislabels.csv, then uncomment the figure blocks.
+
+We classify 16{,}000 test product units into seven defect classes (\texttt{normal}, \texttt{gores},
+\texttt{noda}, \texttt{retak}, \texttt{gelembung}, \texttt{las\_dingin}, and \texttt{kontaminasi})
+from 48{,}000 labelled training units. Each unit combines a $64 \times 64$ grayscale surface image
+with a $3 \times 128$ press sensor recording (temperature, vibration, current). Evaluation on the
+hidden test set uses macro-F1 over all seven classes.
+
+\subsection{Data exploration}
+\label{sec:t1-eda}
+
+\paragraph{Class imbalance and metadata.} Nearly half of the 48{,}000 training units are
+\texttt{normal} (23{,}888 units, 49.8\%), while the six defect classes range from 11.7\%
+(\texttt{gores}, 5{,}623) down to 4.9\% (\texttt{kontaminasi}, 2{,}357); Table~\ref{tab:t1-dist}
+lists the full distribution. Units come from 12 press machines, 150 raw-material batches, and three
+balanced shifts (\texttt{pagi}, \texttt{siang}, \texttt{malam}).
+
+\paragraph{Missing sensors and train--test domain shift.} In the training set, 2{,}352 units
+(4.90\%) have completely missing sensor recordings (all \texttt{NaN}) and 3{,}863 units (8.05\%)
+contain at least one \texttt{NaN}; the test set shows almost identical rates (813 units or 5.08\%
+completely missing; 1{,}298 or 8.11\% with any \texttt{NaN}). In contrast, the production-line
+composition shifts sharply between train and test: training data is dominated by Line~A
+(35{,}964 units, 74.9\% vs.\ 12{,}036 or 25.1\% on Line~B), whereas the test set is dominated by
+Line~B (9{,}607 units, 60.0\% vs.\ 6{,}393 or 40.0\% on Line~A).
+
+\begin{table}[t]
+  \centering
+  \caption{Class distribution in the 48{,}000 training units and the 16{,}000 submitted test
+  predictions (\texttt{prediksi\_klasifikasi.csv}).}
+  \label{tab:t1-dist}
+  \small
+  \begin{tabular}{lrrrr}
+    \toprule
+    Class & Train count & Train share & Test pred.\ count & Test pred.\ share \\
+    \midrule
+    \texttt{normal}      & 23{,}888 & 49.8\% & 9{,}619 & 60.1\% \\
+    \texttt{gores}       &  5{,}623 & 11.7\% & 1{,}240 &  7.8\% \\
+    \texttt{noda}        &  4{,}773 &  9.9\% & 1{,}332 &  8.3\% \\
+    \texttt{las\_dingin} &  4{,}323 &  9.0\% & 1{,}326 &  8.3\% \\
+    \texttt{retak}       &  3{,}606 &  7.5\% &   806   &  5.0\% \\
+    \texttt{gelembung}   &  3{,}430 &  7.1\% &   960   &  6.0\% \\
+    \texttt{kontaminasi} &  2{,}357 &  4.9\% &   717   &  4.5\% \\
+    \midrule
+    Total                & 48{,}000 & 100.0\% & 16{,}000 & 100.0\% \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Preprocessing and architectures}
+\label{sec:t1-arch}
+
+\paragraph{Preprocessing.} Training data is split 80/20 with class stratification
+(\texttt{random\_state=42}), and all normalization statistics are fitted on the 38{,}400 training
+samples only. Because raw sensor arrays are stored in \texttt{float16}, valid (non-\texttt{NaN})
+readings are cast to \texttt{float64} before computing per-channel means and standard deviations;
+computing statistics directly in \texttt{float16} overflows on 4.9M entries and zeroes out the sensor
+branch. Missing entries are filled with 0.0 after standardization. During training we apply random
+horizontal/vertical flips to images and modality dropout ($p=0.15$, zeroing the entire sensor
+tensor) so the model learns to fall back on the image when sensors are absent.
+
+\paragraph{Encoders and fusion strategies.} Both modalities use compact residual networks~\cite{he2016}
+producing 128-dimensional representations:
+\begin{itemize}
+  \item \textbf{Image encoder (2D ResNet):} initial $3\times 3$ convolution (16 channels) followed by
+  four strided residual stages (32, 64, 128, 128 channels) reducing $64\times 64$ to $4\times 4$, then
+  global average pooling and a linear projection to $\mathbb{R}^{128}$ (or 16 spatial tokens of dim
+  128 for attention).
+  \item \textbf{Signal encoder (1D ResNet):} initial kernel-5 convolution (16 channels) followed by
+  four strided 1D residual stages (32, 64, 128, 128 channels) reducing length 128 to 8, then global
+  average pooling and projection to $\mathbb{R}^{128}$ (or 8 temporal tokens for attention).
+  \item \textbf{Late fusion:} concatenates the two 128-d embeddings and passes them through a
+  two-layer MLP ($256 \to 128 \to 7$) with BatchNorm, ReLU, and dropout $0.3$.
+  \item \textbf{Cross-attention fusion:} multi-head attention~\cite{vaswani2017} (4 heads,
+  $d=128$) where the 16 image spatial tokens query the 8 signal temporal tokens, followed by residual
+  LayerNorm, mean pooling of both streams, concatenation, and an MLP classifier.
+\end{itemize}
+
+\subsection{Modality value, label noise, domain shift, and missing sensors}
+\label{sec:t1-experiments}
+
+All comparison experiments train for 15 epochs with AdamW ($\text{lr}=10^{-3}$, weight decay
+$10^{-4}$), cosine annealing, batch size 128, and seed 42; the final ensemble trains for 18 epochs
+across three seeds (42, 123, 999). Before full training, a sanity check overfits one 32-sample batch
+for 40 epochs (\texttt{train\_eval.py --sanity-check}), verifying cross-entropy loss $< 0.1$ and
+macro-F1 $= 1.00$.
+
+\begin{table}[t]
+  \centering
+  \caption{Task 1 validation results on the stratified 20\% split (9{,}600 units). Values marked
+  \textbf{[TBD]} are populated directly from \texttt{kode/results/task1/experiment\_summary.json}.}
+  \label{tab:t1-results}
+  \small
+  \begin{tabular}{lr}
+    \toprule
+    Experiment / Model & Val Macro-F1 \\
+    \midrule
+    Image-Only 2D ResNet                                & \textbf{[TBD]} \\
+    Sensor-Only 1D ResNet                               & \textbf{[TBD]} \\
+    Multimodal Late Fusion (global norm, LS $\epsilon=0.1$) & \textbf{[TBD]} \\
+    Multimodal Cross-Attention (global norm, LS $\epsilon=0.1$) & \textbf{[TBD]} \\
+    Late Fusion without Label Smoothing ($\epsilon=0.0$) & \textbf{[TBD]} \\
+    Late Fusion + Per-Line Norm (image \& sensor)       & \textbf{[TBD]} \\
+    Cross-Attention + Per-Line Norm (image \& sensor)   & \textbf{[TBD]} \\
+    Best Model with 100\% Missing Sensor                & \textbf{[TBD]} \\
+    Final 3-Seed Mean $\pm$ Std (seeds 42, 123, 999)    & \textbf{[TBD]} \\
+    Final 3-Seed Probability Ensemble                   & \textbf{[TBD]} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\paragraph{Value of each modality.} Comparing \texttt{ImageOnlyClassifier} and
+\texttt{SignalOnlyClassifier} per class (\texttt{per\_class\_f1\_comparison.csv}) isolates which
+defects are visual (surface defects such as \texttt{gores}, \texttt{noda}, \texttt{retak}) versus
+sensor-driven (such as \texttt{las\_dingin}), and shows why multimodal fusion outperforms either
+modality alone. \textbf{[TBD: insert key per-class F1 numbers and uncomment
+\texttt{t1\_modality\_value\_comparison.png} once added to \texttt{laporan/figures/}.]}
+
+% \begin{figure}[t]
+%   \centering
+%   \includegraphics[width=\linewidth]{t1_modality_value_comparison}
+%   \caption{Per-class validation F1 comparing image-only, sensor-only, late fusion, and cross-attention.}
+%   \label{fig:t1-modality}
+% \end{figure}
+
+\paragraph{Imperfect labels.} Because labels come from factory inspectors, we flag likely mislabels
+on validation where the trained multimodal model disagrees with the inspector label at confidence
+$\ge 0.85$ (\texttt{detect\_likely\_mislabels} in \texttt{run\_experiments.py}, saved to
+\texttt{likely\_mislabels.csv}), and compare standard cross-entropy ($\epsilon=0.0$) against label
+smoothing~\cite{szegedy2016} ($\epsilon=0.1$). \textbf{[TBD: insert flagged mislabel count/share and
+label-smoothing delta from \texttt{experiment\_summary.json}.]}
+
+\paragraph{Domain shift across production lines.} To address the Line~A $\to$ Line~B shift (75/25\%
+in train vs.\ 40/60\% in test), we evaluate macro-F1 separately on Line~A and Line~B under global
+normalization versus per-line standardization of both image pixels and sensor channels (using
+training-split per-line statistics). \textbf{[TBD: insert Line~A and Line~B macro-F1 before and after
+per-line normalization.]}
+
+\paragraph{Missing modality robustness.} Trained with 15\% sensor modality dropout, the chosen
+multimodal model is evaluated both on naturally missing-sensor validation units and under a 100\%
+missing-sensor stress test (all sensors set to \texttt{NaN}), confirming sensible image-only
+fallback. \textbf{[TBD: insert natural and 100\%-missing macro-F1.]}
+
+\subsection{Final model and test predictions}
+\label{sec:t1-final}
+
+The best-performing architecture and normalization setting on validation is trained across three
+random seeds (42, 123, 999) for 18 epochs, and test predictions average the softmax probabilities of
+all three checkpoints. The resulting \texttt{prediksi\_klasifikasi.csv} contains all 16{,}000 test
+units in exact ID order with all seven classes represented in proportions consistent with the
+training distribution and the Line~A $\to$ Line~B shift (Table~\ref{tab:t1-dist}).
+\textbf{[TBD: uncomment learning-curve and confusion-matrix figures once added to
+\texttt{laporan/figures/}.]}
+
+% \begin{figure}[t]
+%   \centering
+%   \includegraphics[width=0.95\linewidth]{t1_confusion_matrix_final}
+%   \caption{Normalized validation confusion matrix of the final 3-seed ensemble.}
+%   \label{fig:t1-cm}
+% \end{figure}
